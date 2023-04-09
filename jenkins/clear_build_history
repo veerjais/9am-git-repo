@@ -1,0 +1,8 @@
+Go to your Jenkins home page -> Manage Jenkins -> Script Console.
+Copy and paste this script to your Console Script text area and change the "copy_folder" to the project name that you need to clean the history. Then click the Run button.
+
+  def jobName = "copy_folder"  
+	def job = Jenkins.instance.getItem(jobName)  
+	job.getBuilds().each { it.delete() }  
+	job.nextBuildNumber = 1   
+	job.save()
