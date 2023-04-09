@@ -1,0 +1,49 @@
+JENKINS/MASTER SERVER:
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+amazon-linux-extras install java-openjdk11 -y
+yum install git maven jenkins -y
+systemctl start jenkins.service
+systemctl status jenkins.service
+
+ALL SEREVERS:
+
+useradd jenkins
+passwd jenkins
+visudo   ( 100 -- > yy -- > p --- > root = jenkins)
+vim /etc/ssh/sshd_config  ( 63 -- > no=yes)
+systemctl restart sshd
+systemctl status sshd
+su - jenkins
+
+JENKINS/MASTER SERVER:
+
+ssh-keygen -- > enter --- > enter --- > enter
+
+ssh-copy-id jenkins@172.31.39.246
+
+=========================================================================================
+
+Install java on all nodes/SLAVES:
+sudo amazon-linux-extras install java-openjdk11 -y
+
+
+Dashboard  --- > Manage Jenkins --- > Nodes  -- > new node -- > name -- >Permanent Agent  -- > create -- > 
+  
+Configuration:
+
+Number of executors : 3
+Remote root directory : /tmp
+labels : swiggy
+Usage : last option
+Launch method : last option
+hostname: provate ip of slave
+add -- > jenkins -- > user name with private key -- > usrename: ec2-user -- > pem file
+Host Key Verification Strategy: last option
+Save
+
+=========================================================================================
+
+Go to any Job:
+General -- > Restrict where this project can be run -- > swiggy

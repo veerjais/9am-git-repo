@@ -1,0 +1,42 @@
+pipeline {
+    agent {
+        node {
+            label 'slave3'
+            customWorkspace '/tmp/user-3/builds'
+        }
+    }
+    stages {
+        stage("ENV") {
+            input {
+                parameters {
+                    choice(name:'Client', choices:['Paytm', 'PhonePay', 'GPay'], description:"")
+                    choice(name:'Env', choices:['dev', 'test', 'prod'], description:"")
+                }
+                message "Press OK to continue"
+                ok "Yes"
+            }
+            steps {
+                sh 'echo "Build id - $BUILD_ID"'
+                sh 'echo "Job name - $JOB_NAME"'
+                sh 'echo "Jenkins URL - $JENKINS_URL"'
+            }
+        }
+        stage('Git Integration') {
+            steps {
+                git 'https://github.com/nsrdnmb/jenkins-java-project.git'
+            }
+        }
+        stage('CMD') {
+            steps {
+                sh '''
+                touch pipe1
+                pwd
+                whoami
+                date
+                touch pipe2
+                '''
+
+            }
+        }
+    }
+}
