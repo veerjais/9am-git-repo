@@ -1,0 +1,39 @@
+ANSIBLE MAIN SERVER:
+
+amazon-liunx-extras install ansible2 -y
+yum install python python-pip python-level openssl -y
+
+vim /etc/ansible/hosts   (line 13)
+ [dev]
+ 14 172.31.13.232
+ 15 172.31.12.34
+ 16 [test]
+ 17 172.31.4.159
+ 18 172.31.15.174
+
+vim /etc/ansible/ansible.cfg (14 & 22 uncomment)
+
+===================================================================================================
+
+ALL SERVERS:
+
+# hostnamectl set-hostname <name>
+# sudo -i
+useradd ansible
+passwd ansible
+visudo ( 100 : yy & p : root=ansible)
+vim /etc/ssh/sshd_config (63)
+systemctl restart sshd
+systemctl status sshd
+su - ansible
+
+hostname -i
+
+===================================================================================================
+
+ANSIBLE MAIN SERVER:
+
+ssh-keygen
+ssh-copy-id ansible@<private-ip-of-nodes>
+
+===================================================================================================
