@@ -1,0 +1,17 @@
+ssh-keygen -t ed25519 -C "veerjaiswal07@gmail.com"
+cd .ssh
+ll -a
+cat id_ed25519.pub 
+
+cd veer
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+
+cat >> file2
+git add .
+git commit -m "Modified file2 again"
+git commit -am "Modified file3"
+
+git remote add origin git@github.com:veerjais/projectjava.git
+git remote -v
+git push origin main
